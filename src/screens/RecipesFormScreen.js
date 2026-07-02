@@ -19,11 +19,18 @@ const RecipesFormScreen = () => {
 
   const [title, setTitle] = useState(recipeToEdit?.title || "");
   const [image, setImage] = useState(recipeToEdit?.image || "");
-  const [description, setDescription] = useState(recipeToEdit?.description || "");
+  const [ingredients, setIngredients] = useState(recipeToEdit?.ingredients || "");
+  const [instructions, setInstructions] = useState(recipeToEdit?.instructions || "");
 
   const saveRecipe = async () => {
     try {
-      const newRecipe = { title, image, description };
+      const newRecipe = { 
+        title, 
+        image, 
+        ingredients, 
+        instructions,
+        description: `${ingredients}\n\n${instructions}` // for fallback
+      };
       const storedRecipes = await AsyncStorage.getItem("customrecipes");
       let recipes = storedRecipes ? JSON.parse(storedRecipes) : [];
 
@@ -76,9 +83,9 @@ const RecipesFormScreen = () => {
         <Text style={styles.label}>Ingredients List</Text>
         <TextInput
           style={[styles.input, styles.textArea]}
-          placeholder="Enter ingredients (comma separated)"
-          value={description}
-          onChangeText={setDescription}
+          placeholder="Enter ingredients (one per line)"
+          value={ingredients}
+          onChangeText={setIngredients}
           multiline
           numberOfLines={4}
         />
@@ -87,8 +94,8 @@ const RecipesFormScreen = () => {
         <TextInput
           style={[styles.input, styles.textArea]}
           placeholder="Enter instructions"
-          value={description}
-          onChangeText={setDescription}
+          value={instructions}
+          onChangeText={setInstructions}
           multiline
           numberOfLines={4}
         />
