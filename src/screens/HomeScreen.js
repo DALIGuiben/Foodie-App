@@ -7,13 +7,15 @@ import {
   StyleSheet,
   StatusBar,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
 import Categories from "../components/categories";
 import Recipes from "../components/recipes";
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
   const [activeCategory, setActiveCategory] = useState("Chicken");
-  
+
   const categories = [
     { idCategory: "1", strCategory: "Chicken", strCategoryThumb: "https://www.themealdb.com/images/category/chicken.png" },
     { idCategory: "2", strCategory: "Beef", strCategoryThumb: "https://www.themealdb.com/images/category/beef.png" },
@@ -25,6 +27,7 @@ const HomeScreen = () => {
     { idCategory: "8", strCategory: "Lamb", strCategoryThumb: "https://www.themealdb.com/images/category/lamb.png" },
     { idCategory: "9", strCategory: "Breakfast", strCategoryThumb: "https://www.themealdb.com/images/category/breakfast.png" },
     { idCategory: "10", strCategory: "Goat", strCategoryThumb: "https://www.themealdb.com/images/category/goat.png" },
+    { idCategory: "myfood", strCategory: "My Food", strCategoryThumb: "https://img.icons8.com/color/96/000000/food.png" },
   ];
 
   const allFood = [
@@ -151,6 +154,10 @@ const HomeScreen = () => {
   ];
 
   const handleChangeCategory = (category) => {
+    if (category === "My Food") {
+      navigation.navigate("MyFood");
+      return;
+    }
     setActiveCategory(category);
   };
 
